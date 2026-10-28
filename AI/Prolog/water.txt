@@ -1,0 +1,39 @@
+DLS_WaterJug(m, n, d, limit):
+
+    Create an empty set Visited
+
+    Call Recursive_DLS(0, 0, limit)
+
+
+-------------------------------------
+
+Recursive_DLS(x, y, limit):
+
+    If x == d OR y == d:
+        Print "Solution Found"
+        Return TRUE
+
+    If limit == 0:
+        Return FALSE
+
+    Add (x, y) to Visited
+
+    // Generate all possible next states
+
+    NextStates = {
+        (m, y),          // Fill Jug1
+        (x, n),          // Fill Jug2
+        (0, y),          // Empty Jug1
+        (x, 0),          // Empty Jug2
+        (x - min(x, n-y), y + min(x, n-y)),   // Pour Jug1 → Jug2
+        (x + min(y, m-x), y - min(y, m-x))    // Pour Jug2 → Jug1
+    }
+
+    For each (newX, newY) in NextStates:
+
+        If (newX, newY) is NOT in Visited:
+
+            If Recursive_DLS(newX, newY, limit - 1) == TRUE:
+                Return TRUE
+
+    Return FALSE
